@@ -48,3 +48,9 @@ class Question(models.Model):
     pub_date = models.DateTimeField(auto_now= True)
     id = models.IntegerField(primary_key=True)
     type = QuestionTypeField()
+
+class Choice(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    choice_text = models.CharField(max_length=200)
+    votes = models.IntegerField(default=0)
+
