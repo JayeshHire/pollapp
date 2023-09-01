@@ -28,7 +28,8 @@ class question_type:
     
     def __str__(self):
         return self.type
-    
+
+''' 
 class QuestionTypeField(models.Field):
     a : str
     def __init__(self, *args, **kwargs):
@@ -42,12 +43,18 @@ class QuestionTypeField(models.Field):
     def deconstruct(self):
         name, path, args, kwargs = super().deconstruct()
         return name, path, args, kwargs
-
+'''
+        
 class Question(models.Model):
+    type_choices = [
+        ("txt","text"),
+        ("mcq", "multiple choice question"),
+        ("msq","multiple select question"),
+    ]
     question_text = models.CharField(max_length = 200)
     pub_date = models.DateTimeField(auto_now= True)
     id = models.IntegerField(primary_key=True)
-    type = QuestionTypeField()
+    type = models.CharField(choices=type_choices,max_length=3,default="mcq")
 
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
