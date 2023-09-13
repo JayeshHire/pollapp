@@ -46,18 +46,37 @@ class QuestionTypeField(models.Field):
 '''
         
 class Question(models.Model):
+    text = 'txt'
+    mcq = 'mcq'
+    msq = 'msq'
     type_choices = [
-        ("txt","text"),
-        ("mcq", "multiple choice question"),
-        ("msq","multiple select question"),
+        (text,"text"),
+        (mcq, "multiple choice question"),
+        (msq,"multiple select question"),
     ]
     question_text = models.CharField(max_length = 200)
     pub_date = models.DateTimeField(auto_now= True)
-    id = models.IntegerField(primary_key=True)
+    id = models.IntegerField(primary_key=True,auto_created=True)
     type = models.CharField(choices=type_choices,max_length=3,default="mcq")
+    
+    '''def is_upperclass(self):
+        return self.type in {self.text, self.mcq, self.msq}
+    '''
+    
+    def __str__(self):
+        return self.question_text
 
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
     votes = models.IntegerField(default=0)
 
+    def __str__(self):
+        return self.choice_text
+
+class Answer(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    answer_text = models.CharField("correct answer to question",max_length=90)
+
+    def __str__(self):
+        return self.answer_text    
