@@ -1,0 +1,18 @@
+{%if question %}
+<h4><b>{{question.question_text}}</b></h4>
+{% if question.type != 'txt'%}
+{%for choice in choice_list%}
+<ul>
+    <span>{{choice}}</span> 
+    <span>{{choice.votes}}</span>
+     
+</ul>
+{%endfor%}
+{%else%}
+<span><h4>Enter your text answer for the question</h4></span>
+{%endif%}
+{%else%} 
+<h4>
+    Question with the given id does not exists
+</h4>
+{%endif%}

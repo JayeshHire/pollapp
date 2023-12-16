@@ -55,8 +55,7 @@ class Question(models.Model):
         (msq,"multiple select question"),
     ]
     question_text = models.CharField(max_length = 200)
-    pub_date = models.DateTimeField(auto_now= True)
-    id = models.IntegerField(primary_key=True,auto_created=True)
+    pub_date = models.DateTimeField(auto_created=True)
     type = models.CharField(choices=type_choices,max_length=3,default="mcq")
     
     '''def is_upperclass(self):
@@ -80,3 +79,4 @@ class Answer(models.Model):
 
     def __str__(self):
         return self.answer_text    
+
